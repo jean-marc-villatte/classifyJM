@@ -62,7 +62,7 @@ public class UsersController extends JaxRsController {
             representation = new GsonRepresentation( users );
             MyCache.getInstance().put( path, representation, users );
         }
-        MyCache.getInstance().displayCache();
+        // MyCache.getInstance().displayCache();
 
         if ( representation != null ) {
             return representation.toString();
@@ -85,7 +85,7 @@ public class UsersController extends JaxRsController {
                 MyCache.getInstance().put( path, representation, resource );
             }
         }
-        MyCache.getInstance().displayCache();
+        // MyCache.getInstance().displayCache();
 
         if ( representation != null ) {
             return representation.toString();
@@ -113,7 +113,7 @@ public class UsersController extends JaxRsController {
         User u = representation.get( User.class );
         userBusiness.set( u );
         MyCache.getInstance().invalidate( "user:" + u.getId() );
-        MyCache.getInstance().displayCache();
+        // MyCache.getInstance().displayCache();
         return representation.toString();
     }
 
@@ -127,7 +127,7 @@ public class UsersController extends JaxRsController {
         userBusiness.delete( u );
         GsonRepresentation rep = new GsonRepresentation( u );
         MyCache.getInstance().invalidate( "user:" + u.getId() );
-        MyCache.getInstance().displayCache();
+        // MyCache.getInstance().displayCache();
         return rep.toString();
     }
 }

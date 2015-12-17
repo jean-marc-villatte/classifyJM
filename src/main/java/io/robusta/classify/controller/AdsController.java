@@ -64,7 +64,7 @@ public class AdsController extends JaxRsController {
             representation = new GsonRepresentation( ads );
             MyCache.getInstance().put( path, representation, ads );
         }
-        MyCache.getInstance().displayCache();
+        // MyCache.getInstance().displayCache();
 
         if ( representation != null ) {
             return representation.toString();
@@ -87,7 +87,7 @@ public class AdsController extends JaxRsController {
                 MyCache.getInstance().put( path, representation, resource );
             }
         }
-        MyCache.getInstance().displayCache();
+        // MyCache.getInstance().displayCache();
 
         if ( representation != null ) {
             return representation.toString();
@@ -100,10 +100,11 @@ public class AdsController extends JaxRsController {
     @Consumes( "application/json" )
     public String createAdJson( String json ) {
         String path = uriInfo.getPath();
-        GsonRepresentation representation = new GsonRepresentation( json );
+        // GsonRepresentation representation = new GsonRepresentation( json );
+        Representation representation = getRepresentation( json );
         Ad a;
         try {
-            a = representation.get( Ad.class );
+            a = (Ad) representation.get( Ad.class );
         } catch ( RepresentationException e ) {
             return "";
         }
@@ -116,11 +117,12 @@ public class AdsController extends JaxRsController {
     @Path( "{ad}" )
     @Consumes( "application/json" )
     public String updateAd( @PathParam( "ad" ) Long adId, String json ) {
-        GsonRepresentation representation = new GsonRepresentation( json );
-        Ad a = representation.get( Ad.class );
+        // GsonRepresentation representation = new GsonRepresentation( json );
+        Representation representation = getRepresentation( json );
+        Ad a = (Ad) representation.get( Ad.class );
         adBusiness.set( a );
         MyCache.getInstance().invalidate( "ad:" + a.getId() );
-        MyCache.getInstance().displayCache();
+        // MyCache.getInstance().displayCache();
         return representation.toString();
     }
 
@@ -134,7 +136,7 @@ public class AdsController extends JaxRsController {
         adBusiness.delete( a );
         GsonRepresentation rep = new GsonRepresentation( a );
         MyCache.getInstance().invalidate( "ad:" + a.getId() );
-        MyCache.getInstance().displayCache();
+        // MyCache.getInstance().displayCache();
         return rep.toString();
     }
 }

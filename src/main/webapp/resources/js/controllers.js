@@ -1,6 +1,40 @@
 var controllers = angular.module('classifyApp.controllers', []);
 
-controllers.controller('UserListController',
+controllers.controller('ClassifyController', function($scope, $state) {
+	$scope.menus = [ {
+		uisref : "ads",
+		value : "Home"
+	}, {
+		uisref : "newAd",
+		value : "New ad"
+	}, {
+		uisref : "myAds",
+		value : "My Ads"
+	}, {
+		uisref : "users",
+		value : "Users"
+	} ];
+	$scope.currentMenu = $scope.menus[0];
+	$scope.selectMenu = function(menu) {
+		$scope.currentMenu = menu;
+	};
+
+	$scope.search=null;
+	$scope.eraseSearch=function(){
+		$scope.search=null;
+	};
+	
+	$scope.$watch(function() {
+		return $state.current.name;
+	}, function(state) {
+		$scope.menus.forEach(function(item) {
+			if (item.uisref == state) {
+				$scope.selectMenu(item);
+			}
+		});
+	});
+
+}).controller('UserListController',
 		function($scope, $state, popupService, User) {
 			$scope.users = User.query(); // fetch all users.
 			$scope.deleteUser = function(user) { // Delete a user.

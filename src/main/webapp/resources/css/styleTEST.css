@@ -1,5 +1,16 @@
 @CHARSET "UTF-8";
 
+body {
+	padding-top: 50px;
+}
+
+
+[class*="col-"], footer {
+  background-color: lightgreen;
+  border: 2px solid black;
+  border-radius: 6px;
+  line-height: 40px;
+}
 
 .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
 	background-color: #428BCA;
